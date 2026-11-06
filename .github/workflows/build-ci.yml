@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.2.2
       - uses: actions/setup-go@v4
       - name: Vet app
-        run: go vet ./...
+        run: cd app && go vet ./...
 
 
   # Test
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.2.2
       - uses: actions/setup-go@v4
       - name: Test Application
-        run: go test -race -count=1 ./...
+        run: cd app && go test -race -count=1 ./...
 
 
   # Lint
@@ -41,4 +41,4 @@ jobs:
         with:
           version: v2.5.0
       - name: Run Linter
-        run: golangci-lint run
+        run: app
