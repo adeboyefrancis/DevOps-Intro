@@ -1,0 +1,44 @@
+name: Build CI (Go)
+
+on:
+  push: 
+    branches: [ main ]
+
+  pull_request: 
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+
+  # Vet
+  vet:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.2.2
+      - uses: actions/setup-go@v4
+      - name: Vet app
+        run: go vet ./...
+
+
+  # Test
+  test:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.2.2
+      - uses: actions/setup-go@v4
+      - name: Test Application
+        run: go test -race -count=1 ./...
+
+
+  # Lint
+  lint:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.2.2
+      - uses: golangci/golang-lint-action@v8
+        with:
+          version: v2.5.0
+      - name: Run Linter
+        run: golangci-lint run
