@@ -12,7 +12,7 @@ gh api repos/actions/checkout/git/refs/tags/v4.4.0 --jq '.object.sha'
 gh api repos/actions/setup-go/git/refs/tags/v7.0.0 --jq '.object.sha'
 
 # Retrieve Golang CI Actions SHA
-gh api repos/golangci/golangci-lint-action/git/refs/tags/v2.5.0 --jq '.object.sha'
+gh api repos/golangci/golangci-lint-action/git/refs/tags/v6.5.2 --jq '.object.sha'
 
 # Further Variations applicable across Checkout/Setup Actions
 # Get the latest commit SHA of a branch (e.g., main)

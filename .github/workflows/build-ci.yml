@@ -56,7 +56,8 @@ jobs:
           cache: false
 
       - name: Lint App using golangci-lint v2.5.0
-        uses: golangci/golangci-lint-action@9e759033d06fababc878a39fd4d4a901dad1dd64 #v2.5.0
+        uses: golangci/golangci-lint-action@8564da7cb3c6866ed1da648ca8f00a258ef0c802 #v6.5.2
         with:
           version: v2.5.0
           working-directory: app
+          skip-cache: true
