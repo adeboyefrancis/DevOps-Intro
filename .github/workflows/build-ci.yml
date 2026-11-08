@@ -1,14 +1,18 @@
-name: Build CI (Go)
+name: Build CI
 
+# Triggers
 on:
   push:
     branches: [main]
+
   pull_request:
     branches: [main]
 
+# Permissions
 permissions:
   contents: read
 
+# Working Directory
 defaults:
   run:
     working-directory: app
@@ -17,41 +21,42 @@ jobs:
   vet:
     runs-on: ubuntu-26.04
     steps:
-      - name: Check out repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 #v4.4.0
+
       - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e #v7.0.0
         with:
-          go-version: '1.24'
+          go-version: "1.24"
           cache: false
-      - name: Vet app
+      - name: Vet
         run: go vet ./...
 
   test:
     runs-on: ubuntu-26.04
     steps:
-      - name: Check out repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 #v4.4.0
+
       - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e #v7.0.0
         with:
-          go-version: '1.24'
+          go-version: "1.24"
           cache: false
-      - name: Test application
+      - name: Test
         run: go test -race -count=1 ./...
 
   lint:
     runs-on: ubuntu-26.04
     steps:
-      - name: Check out repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 #v4.4.0
+
       - name: Set up Go
-        uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5.5.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e #v7.0.0
         with:
-          go-version: '1.24'
+          go-version: "1.24"
           cache: false
-      - name: Lint app
-        uses: golangci/golangci-lint-action@25e2cdc5eb1d7a04fdc45ff538f1a00e960ae128 # v8.0.0
+
+      - name: Lint using golangci-lint v2.5.0
+        uses: golangci/golangci-lint-action@25e2cdc5eb1d7a04fdc45ff538f1a00e960ae128 #8.0.0
         with:
           version: v2.5.0
           working-directory: app
