@@ -12,6 +12,11 @@ on:
 permissions:
   contents: read
 
+# Working Directory
+defaults:
+  run:
+    working-directory: app
+
 jobs:
   vet:
     runs-on: ubuntu-26.04
