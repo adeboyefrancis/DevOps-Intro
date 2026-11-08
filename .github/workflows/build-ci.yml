@@ -28,7 +28,7 @@ jobs:
         with:
           go-version: "1.24"
           cache: false
-      - name: Vet Application
+      - name: Vet
         run: go vet ./...
 
   test:
@@ -41,7 +41,7 @@ jobs:
         with:
           go-version: "1.24"
           cache: false
-      - name: Test Application
+      - name: Test
         run: go test -race -count=1 ./...
 
   lint:
@@ -55,8 +55,8 @@ jobs:
           go-version: "1.24"
           cache: false
 
-      - name: Lint App using golangci-lint v2.5.0
-        uses: golangci/golangci-lint-action@8564da7cb3c6866ed1da648ca8f00a258ef0c802 #v6.5.2
+      - name: Lint using golangci-lint v2.5.0
+        uses: golangci/golangci-lint-action@25e2cdc5eb1d7a04fdc45ff538f1a00e960ae128 #8.0.0
         with:
           version: v2.5.0
           working-directory: app
