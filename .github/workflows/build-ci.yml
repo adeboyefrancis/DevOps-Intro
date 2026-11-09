@@ -67,3 +67,11 @@ jobs:
           version: v2.5.0
           working-directory: app
           skip-cache: true
+
+  ci-ok:
+    if: always()
+    needs: [vet, test, lint]
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          test "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "false"
