@@ -18,12 +18,17 @@ defaults:
     working-directory: app
 
 # Matrix Strategy to run multiple go versions
-strategy:
+# strategy:
+#   fail-fast: false
+#   matrix:
+#     go-version: [ '1.23', '1.24' ]
+
+jobs:
+  strategy:
   fail-fast: false
   matrix:
     go-version: [ '1.23', '1.24' ]
 
-jobs:
   vet:
     runs-on: ubuntu-26.04
     steps:
