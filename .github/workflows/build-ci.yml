@@ -11,11 +11,6 @@ on:
 permissions:
   contents: read
 
-# Working Directory
-defaults:
-  run:
-    working-directory: app
-
 jobs:
   vet:
     name: Vet (Go ${{ matrix.go }})
@@ -35,6 +30,7 @@ jobs:
           cache: true
 
       - name: Vet Code
+        working-directory: app
         run: go vet ./...
 
   test:
@@ -55,6 +51,7 @@ jobs:
           cache: true
 
       - name: Run Tests
+        working-directory: app
         run: go test -race -count=1 ./...
 
   lint:
@@ -77,7 +74,6 @@ jobs:
           working-directory: app
 
   ci-ok:
-    name: CI Status Check
     if: always()
     needs: [vet, test, lint]
     runs-on: ubuntu-26.04
