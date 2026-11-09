@@ -17,6 +17,12 @@ defaults:
   run:
     working-directory: app
 
+# Matrix Strategy to run multiple go versions
+strategy:
+  fail-fast: false
+  matrix:
+    go-version: [ '1.23', '1.24' ]
+
 jobs:
   vet:
     runs-on: ubuntu-26.04
@@ -26,7 +32,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e #v7.0.0
         with:
-          go-version: "1.24"
+          go-version: ${{ matrix.go-version }}
           cache: false
       - name: Vet
         run: go vet ./...
@@ -39,7 +45,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e #v7.0.0
         with:
-          go-version: "1.24"
+          go-version: ${{ matrix.go-version }}
           cache: false
       - name: Test
         run: go test -race -count=1 ./...
