@@ -17,14 +17,13 @@ defaults:
   run:
     working-directory: app
 
-
 jobs:
   vet:
     runs-on: ubuntu-26.04
     strategy:
-     fail-fast: false
-     matrix:
-      go: [ '1.23', '1.24' ]
+      fail-fast: false
+      matrix:
+        go: ["1.23", "1.24"]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 #v4.4.0
       - name: Set up Go
@@ -38,9 +37,9 @@ jobs:
   test:
     runs-on: ubuntu-26.04
     strategy:
-     fail-fast: false
-     matrix:
-      go: [ '1.23', '1.24' ]
+      fail-fast: false
+      matrix:
+        go: ["1.23", "1.24"]
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 #v4.4.0
       - name: Set up Go
@@ -73,5 +72,6 @@ jobs:
     needs: [vet, test, lint]
     runs-on: ubuntu-26.04
     steps:
-      - working-directory: app
+      - name: Verify All Jobs Fail or Cancelled
+        shell: bash
         run: test "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "false"
