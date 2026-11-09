@@ -73,6 +73,6 @@ jobs:
     needs: [vet, test, lint]
     runs-on: ubuntu-26.04
     steps:
-      - working-directory: .
+      - working-directory: app
         run: |
           test "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "false"
