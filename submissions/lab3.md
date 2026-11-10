@@ -83,4 +83,4 @@ Using Matrix build strategy is an intergal part of CI process, as it aids in cat
 | With cache + matrix | 42 s |
 
 - *Added paths to event triggers*
-The main purpose for this strategy is to ensure that not every changes to project triggers a CI build, which could led to burning compute resources and causing unxepected changes.
+The main purpose for this strategy is to ensure that not every changes to project triggers a CI build, which could led to burning compute resources and causing unxepected changes. Ad-hoc tasks on docs/ submissions/ lectures shouldnt trigger a CI build.
