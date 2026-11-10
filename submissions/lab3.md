@@ -2,7 +2,7 @@
 
 ### Steps Applied
 
-- Retrieve SHA for for both checkout/Setup/golangci-action action for a more secured approach of Pinning Tags via `gh api`
+- *Retrieve SHA for for both checkout/Setup/golangci-action action for a more secured approach of Pinning Tags via `gh api`*
 
 ```bash
 # Retrieve Checkout Action SHA
@@ -25,9 +25,12 @@ gh api repos/{owner}/{repo}/commits/v4.4.0 --jq '.sha'
 gh api repos/{owner}/{repo}/commits/a1b2c3d --jq '.sha'
 ```
 
-- Integrate Jobs incrementally i.e add Vet, Once passed add other subsequent jobs
+- *Integrate Jobs incrementally i.e add Vet, Once passed add other subsequent jobs*
 
-### Design Questions
+- *Triggered PR gate failure by commenting out `app/handlers.go` dependencies*
+This ensure CI test fail due to code base not meeting baseline health checks of build not meeting branch protection rule which enforces CI test passing before merging into main branch.
+
+- *Design Questions*
 
 #### a) Why pin the runner version (`ubuntu-24.04`) instead of `ubuntu-latest`? What breaks otherwise?
 
@@ -64,3 +67,7 @@ gh api repos/{owner}/{repo}/commits/a1b2c3d --jq '.sha'
 - **Answer:**
   - **Stage vs. Job:** A **stage** defines a sequential pipeline phase (e.g., `build`, `test`, `deploy`). A **job** is an individual execution task defined _within_ a stage. Jobs in the same stage execute concurrently in parallel; stages execute sequentially from top to bottom.
   - **`stages:` vs `dependencies:`:** `stages:` controls the overall execution order of the pipeline phases. `dependencies:` provides fine-grained control over **artifact passing**, specifying exactly which upstream jobs' artifacts should be downloaded by a downstream job, rather than downloading artifacts from all jobs in previous stages.
+
+
+- *Caching Dependencies*
+Integrating caching into CI build can Optimize build time of the pipeline, increased reliability/resilence and reduce the amount compute resource consumed.
