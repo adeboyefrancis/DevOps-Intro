@@ -30,7 +30,7 @@ gh api repos/{owner}/{repo}/commits/a1b2c3d --jq '.sha'
 - *Triggered PR gate failure by commenting out `app/handlers.go` dependencies*
 This ensure CI test fail due to code base not meeting baseline health checks of build not meeting branch protection rule which enforces CI test passing before merging into main branch.
 
-- *Design Questions*
+- *Core Design Questions*
 
 #### a) Why pin the runner version (`ubuntu-24.04`) instead of `ubuntu-latest`? What breaks otherwise?
 
