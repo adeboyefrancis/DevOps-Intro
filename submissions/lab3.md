@@ -71,3 +71,16 @@ This ensure CI test fail due to code base not meeting baseline health checks of 
 
 - *Caching Dependencies*
 Integrating caching into CI build can Optimize build time of the pipeline, increased reliability/resilence and reduce the amount compute resource consumed.
+
+- *Catchinng Bugs earlier across multiple go versions using Matrix build strategy*
+Using Matrix build strategy is an intergal part of CI process, as it aids in catching bugs earlier and resolving version imcompatibility across multiple versions. To make this more effective, enforced Branch protection along with a CI Test aggregator guard rail that ensures CI test passes across all jobs using both go version before being able to merge.
+
+- *Measuring Opimization of Builds with Caching/Non-Caching*
+| Scenario | Wall-clock |
+|----------|-----------|
+| Baseline (no cache, single Go version, no path filter) | 36 s |
+| With cache | 31 s |
+| With cache + matrix | 42 s |
+
+- *Added paths to event triggers*
+The main purpose for this strategy is to ensure that not every changes to project triggers a CI build, which could led to burning compute resources and causing unxepected changes.

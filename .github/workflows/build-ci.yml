@@ -4,8 +4,15 @@ name: Build CI
 on:
   push:
     branches: [main]
+    paths: # Ensures only the following paths trigger a build, Whle skipping Ad-hoc changes e.g. Docs
+      - 'app/**'
+      - '.github/workflows/build-ci.yml'
+
   pull_request:
     branches: [main]
+    paths:
+      - 'app/**'
+      - '.github/workflows/build-ci.yml'
 
 # Permissions
 permissions:
