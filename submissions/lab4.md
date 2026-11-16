@@ -113,3 +113,60 @@ Firstly, Its important to understand the error code class for a strategic approa
 - query endpoint `curl -v https://localhost:8080/quicknotes/health
 - Confirm app is running `systemctl status <service>`
 - Check listening port `ss -tlnp | grep <port>`
+
+### Task 2 — Outside-In Debugging on a Broken Deploy
+
+Triggered Port binding Chaos by assigned an already in use port for quicknotes to trigger a port conflict
+```bash
+cd app/
+# break it: bind to a port that's already taken
+ADDR=:8080 go run . &
+PID1=$!
+sleep 1
+ADDR=:8080 go run . 2>&1 | tee /tmp/qn-broken.log &
+PID2=$!
+sleep 2
+
+# Use whichever you see — one process or both:
+ps -ef | grep "go run" | grep -v grep
+
+#Output
+3844     579  0 13:03 pts/1    00:00:00 go run .
+```
+
+Troubleshooting Substrate Out - In
+```bash
+## 1) systemctl-style: is it running?
+ps -ef | grep quicknotes
+#Output
+3917    3844  0 13:03 pts/1    00:00:00 /home/cr258419/.cache/go-build/cc/cce264391445fbc39c1d4f4bd76a9499d7427bf29942523f515942941bf3d626-d/quicknotes
+
+# 2) is it listening?
+ss -tlnp | grep 8080
+# Output
+LISTEN 0      4096               *:8080             *:*    users:(("quicknotes",pid=3917,fd=3)) 
+
+# 3) reachable from host?
+curl -s -o /dev/null -w "%{http_code}\n" http://localhost:8080/health
+#Output
+200
+
+# 4) firewall blocking?
+sudo iptables -L -n -v 2>/dev/null || sudo nft list ruleset 2>/dev/null || true
+# No Output i.e - No firewall blocking 
+
+# 5) DNS?
+dig +short localhost
+#Output
+127.0.0.1 # DNS resolving to host
+```
+
+Remediation
+```bash
+kill $PID1
+sleep 1
+ADDR=:8080 go run . &
+sleep 1
+curl -s http://localhost:8080/health
+# Output
+{"notes":7,"status":"ok"}
