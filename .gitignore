@@ -55,6 +55,9 @@ Thumbs.db
 # Local notes of concepts
 notes/
 
+# Environment Vars
+.env
+
 # NOTE: deliberately NOT ignored, because students commit them as lab evidence:
 #   submissions/labN.md        (lab reports)
 #   .github/workflows/*.yml    (Lab 3 CI)
